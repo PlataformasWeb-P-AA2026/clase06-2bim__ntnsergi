@@ -5,7 +5,7 @@ import json
 app = Flask(__name__, template_folder='templates')
 app.config['SECRET_KEY'] = 'una-clave-secreta-000001'
 
-token = 'baa3297a4c53b5516f4fc6a9cc50f859271b4cc8'
+token = '83ad5d74013af017ad7e1debc50172cb941de1ea'
 headers = {
         "Authorization": f"Token {token}",
         "Content-Type": "application/json"
@@ -21,7 +21,7 @@ def los_estudiantes():
     """
     """
     r = requests.get("http://localhost:8000/api/estudiantes/",
-            auth=('rene', '1'))
+            auth=('admin', '1234'))
     print("---------------------")
     print(r.content)
     print("---------------------")
@@ -161,6 +161,13 @@ def crear_numero_telefonico():
                            estudiantes=estudiantes_disponibles,
                            )
 
+@app.route("/los/estudiantes/direccion")
+def mostrarDirecciones():
+    r = requests.get("http://localhost:8000/api/estudiantes/", headers=headers)
+    datos = json.loads(r.content)['results']
+    numero = json.loads(r.content)['count']
+    return render_template("direcciones.html", datos=datos,
+    numero=numero)
 
 if __name__ == "__main__":
     app.run(debug=True)

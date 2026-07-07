@@ -12,10 +12,12 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
 from administrativo.serializers import UserSerializer, GroupSerializer, \
-EstudianteSerializer, NumeroTelefonicoSerializer
+EstudianteSerializer, NumeroTelefonicoSerializer, \
+DescripcionEstudianteSerializer, TipoEstudianteSerializer
 
 # importar las clases de models.py
-from administrativo.models import Estudiante, NumeroTelefonico
+from administrativo.models import Estudiante, NumeroTelefonico, \
+DescripcionEstudiante, TipoEstudiante
 
 # importar los formularios de forms.py
 from administrativo.forms import EstudianteForm, NumeroTelefonicoEstudianteForm, \
@@ -166,7 +168,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated] # todas las personas que quieran trabajar sobre el servicio de usuarios, necesitan estar logueados
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -196,4 +198,20 @@ class NumeroTelefonicoViewSet(viewsets.ModelViewSet):
     """
     queryset = NumeroTelefonico.objects.all()
     serializer_class = NumeroTelefonicoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class DescripcionEstudianteViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = DescripcionEstudiante.objects.all()
+    serializer_class = DescripcionEstudianteSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class TipoEstudianteViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = TipoEstudiante.objects.all()
+    serializer_class = TipoEstudianteSerializer
     permission_classes = [permissions.IsAuthenticated]

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Las Direcciones</title>
+</head>
+
+<body>
+    <h1>Las Direcciones (URLs)</h1>
+    <table>
+        <tr>
+            <th>Nombre del Estudiante</th>
+            <th>URL Disponible (Dirección)</th>
+        </tr>
+        {% for estudiante in datos %}
+        <tr>
+            <td>{{ estudiante.nombre }} {{ estudiante.apellido }}</td>
+            <td><a href="{{ estudiante.url }}">{{ estudiante.url }}</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>

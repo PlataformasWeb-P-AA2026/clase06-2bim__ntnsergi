@@ -12,6 +12,8 @@ router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'estudiantes', views.EstudianteViewSet)
 router.register(r'numerosts', views.NumeroTelefonicoViewSet)
+router.register(r'descripciones', views.DescripcionEstudianteViewSet)
+router.register(r'tipos', views.TipoEstudianteViewSet)
 
 
 urlpatterns = [
@@ -36,5 +38,6 @@ urlpatterns = [
         path('entrando/login/', views.ingreso, name="login"),
         path('api/', include(router.urls)),
         path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 
  ]
