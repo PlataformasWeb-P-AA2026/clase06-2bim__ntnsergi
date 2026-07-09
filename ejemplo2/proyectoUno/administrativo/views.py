@@ -13,11 +13,11 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from administrativo.serializers import UserSerializer, GroupSerializer, \
 EstudianteSerializer, NumeroTelefonicoSerializer, \
-DescripcionEstudianteSerializer, TipoEstudianteSerializer
+DireccionSerializer, TipoDireccionSerializer
 
 # importar las clases de models.py
 from administrativo.models import Estudiante, NumeroTelefonico, \
-DescripcionEstudiante, TipoEstudiante
+Direccion, TipoDireccion
 
 # importar los formularios de forms.py
 from administrativo.forms import EstudianteForm, NumeroTelefonicoEstudianteForm, \
@@ -200,18 +200,18 @@ class NumeroTelefonicoViewSet(viewsets.ModelViewSet):
     serializer_class = NumeroTelefonicoSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class DescripcionEstudianteViewSet(viewsets.ModelViewSet):
+class DireccionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = DescripcionEstudiante.objects.all()
-    serializer_class = DescripcionEstudianteSerializer
+    queryset = Direccion.objects.all()
+    serializer_class = DireccionSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class TipoEstudianteViewSet(viewsets.ModelViewSet):
+class TipoDireccionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = TipoEstudiante.objects.all()
-    serializer_class = TipoEstudianteSerializer
+    queryset = TipoDireccion.objects.all()
+    serializer_class = TipoDireccionSerializer
     permission_classes = [permissions.IsAuthenticated]

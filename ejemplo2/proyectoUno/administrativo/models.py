@@ -23,16 +23,16 @@ class NumeroTelefonico(models.Model):
     def __str__(self):
         return "%s %s" % (self.telefono, self.tipo)
 
-class DescripcionEstudiante(models.Model):
-    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, related_name="descripciones")
-    descripcion = models.TextField()
-
-    def __str__(self):
-        return "%s %s" % (self.estudiante, self.descripcion)
-
-class TipoEstudiante(models.Model):
-    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, related_name="tipos")
+class TipoDireccion(models.Model):
     tipo = models.CharField(max_length=100)
 
     def __str__(self):
-        return "%s %s" % (self.estudiante, self.tipo)
+        return "%s" % (self.tipo)
+
+class Direccion(models.Model):
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, related_name="direcciones")
+    tipo_direccion = models.ForeignKey(TipoDireccion, on_delete=models.CASCADE, related_name="direcciones")
+    direccion = models.TextField()
+
+    def __str__(self):
+        return "%s %s %s" % (self.estudiante, self.tipo_direccion, self.direccion)

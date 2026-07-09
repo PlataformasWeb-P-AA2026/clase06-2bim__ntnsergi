@@ -4,8 +4,8 @@ from django import forms
 
 from administrativo.models import Estudiante, \
         NumeroTelefonico, \
-        DescripcionEstudiante, \
-        TipoEstudiante
+        Direccion, \
+        TipoDireccion
 
 class EstudianteForm(ModelForm):
     class Meta:
@@ -71,12 +71,12 @@ class NumeroTelefonicoEstudianteForm(ModelForm):
         model = NumeroTelefonico
         fields = ['telefono', 'tipo', 'estudiante']
 
-class DescripcionEstudianteForm(ModelForm):
+class DireccionForm(ModelForm):
     class Meta:
-        model = DescripcionEstudiante
-        fields = ['estudiante', 'descripcion']
+        model = Direccion
+        fields = ['estudiante', 'tipo_direccion', 'direccion']
 
-class TipoEstudianteForm(ModelForm):
+class TipoDireccionForm(ModelForm):
     class Meta:
-        model = TipoEstudiante
-        fields = ['estudiante', 'tipo']
+        model = TipoDireccion
+        fields = ['tipo']

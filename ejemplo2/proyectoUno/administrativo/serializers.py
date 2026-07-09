@@ -1,4 +1,4 @@
-from administrativo.models import TipoEstudiante
+from administrativo.models import TipoDireccion
 from django.contrib.auth.models import User, Group
 from administrativo.models import *
 
@@ -29,14 +29,14 @@ class NumeroTelefonicoSerializer(serializers.HyperlinkedModelSerializer):
         # fields = ['id', 'telefono', 'tipo']
         fields = '__all__'
 
-class DescripcionEstudianteSerializer(serializers.HyperlinkedModelSerializer):
+class DireccionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = DescripcionEstudiante
-        # fields = ['id', 'descripcion']
+        model = Direccion
+        # fields = ['id', 'direccion']
         fields = '__all__'
 
-class TipoEstudianteSerializer(serializers.HyperlinkedModelSerializer):
+class TipoDireccionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = TipoEstudiante
+        model = TipoDireccion
         # fields = ['id', 'tipo']
         fields = '__all__'

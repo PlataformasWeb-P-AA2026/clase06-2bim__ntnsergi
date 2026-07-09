@@ -12,8 +12,8 @@ router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'estudiantes', views.EstudianteViewSet)
 router.register(r'numerosts', views.NumeroTelefonicoViewSet)
-router.register(r'descripciones', views.DescripcionEstudianteViewSet)
-router.register(r'tipos', views.TipoEstudianteViewSet)
+router.register(r'direcciones', views.DireccionViewSet)
+router.register(r'tipos_direccion', views.TipoDireccionViewSet)
 
 
 urlpatterns = [

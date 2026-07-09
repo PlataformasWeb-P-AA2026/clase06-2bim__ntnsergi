@@ -8,16 +8,18 @@
 </head>
 
 <body>
-    <h1>Las Direcciones (URLs)</h1>
-    <table>
+    <h1>Las Direcciones (Total: {{ numero }})</h1>
+    <table border="1">
         <tr>
-            <th>Nombre del Estudiante</th>
-            <th>URL Disponible (Dirección)</th>
+            <th>Estudiante</th>
+            <th>Tipo Dirección</th>
+            <th>Dirección</th>
         </tr>
-        {% for estudiante in datos %}
+        {% for d in datos %}
         <tr>
-            <td>{{ estudiante.nombre }} {{ estudiante.apellido }}</td>
-            <td><a href="{{ estudiante.url }}">{{ estudiante.url }}</a></td>
+            <td>{{ d.estudiante }}</td>
+            <td>{{ d.tipo_direccion }}</td>
+            <td>{{ d.direccion }}</td>
         </tr>
         {% endfor %}
     </table>

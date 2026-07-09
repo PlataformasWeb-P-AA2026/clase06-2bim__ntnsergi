@@ -92,6 +92,11 @@ def obtener_estudiante(url):
     nombre_estudiante = json.loads(r.content)['nombre']
     return nombre_estudiante
 
+def obtener_tipo_direccion(url):
+    r = requests.get(url, headers=headers)
+    tipo = json.loads(r.content)['tipo']
+    return tipo
+
 @app.route("/crear/estudiante", methods=['GET', 'POST'])
 def agregar_estudiante():
     """
@@ -163,11 +168,66 @@ def crear_numero_telefonico():
 
 @app.route("/los/estudiantes/direccion")
 def mostrarDirecciones():
-    r = requests.get("http://localhost:8000/api/estudiantes/", headers=headers)
+    r = requests.get("http://localhost:8000/api/direcciones/", headers=headers)
     datos = json.loads(r.content)['results']
     numero = json.loads(r.content)['count']
-    return render_template("direcciones.html", datos=datos,
+    datos2 = []
+    for d in datos:
+        datos2.append({
+            'direccion': d['direccion'],
+            'tipo_direccion': obtener_tipo_direccion(d['tipo_direccion']),
+            'estudiante': obtener_estudiante(d['estudiante'])
+        })
+    return render_template("direcciones.html", datos=datos2,
     numero=numero)
+
+@app.route("/estudiantes/crear/direccion", methods=['GET', 'POST'])
+def crear_direccion():
+    """
+    """
+    r_estudiantes = requests.get("http://localhost:8000/api/estudiantes/", headers=headers)
+    estudiantes_disponibles = json.loads(r_estudiantes.content)['results']
+
+    if request.method == 'POST':
+        direccion = request.form['direccion']
+        tipo_direccion_texto = request.form['tipo_direccion']
+        estudiante = request.form['estudiante']
+
+        # Buscar si el tipo de dirección ya existe
+        r_tipos = requests.get("http://localhost:8000/api/tipos_direccion/", headers=headers)
+        tipos_existentes = json.loads(r_tipos.content)['results']
+        
+        tipo_url = None
+        for t in tipos_existentes:
+            if t['tipo'].strip().lower() == tipo_direccion_texto.strip().lower():
+                tipo_url = t['url']
+                break
+                
+        # Si no existe, crearlo
+        if not tipo_url:
+            r_nuevo_tipo = requests.post("http://localhost:8000/api/tipos_direccion/", 
+                                         json={'tipo': tipo_direccion_texto}, headers=headers)
+            nuevo_tipo = json.loads(r_nuevo_tipo.content)
+            tipo_url = nuevo_tipo['url']
+
+        direccion_data = {
+            'direccion': direccion,
+            'tipo_direccion': tipo_url,
+            'estudiante': estudiante
+        }
+
+        r = requests.post("http://localhost:8000/api/direcciones/",
+                              json=direccion_data,
+                              headers=headers)
+
+        print(f"Status Code (Crear Dirección): {r.status_code}")
+
+        nuevo_direccion = json.loads(r.content)
+        flash(f"Dirección '{nuevo_direccion['direccion']}' creada exitosamente para el estudiante!", 'success')
+        return redirect(url_for('mostrarDirecciones'))
+
+    return render_template("crear_direccion.html", 
+                           estudiantes=estudiantes_disponibles)
 
 if __name__ == "__main__":
     app.run(debug=True)
